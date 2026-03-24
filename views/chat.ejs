@@ -75,17 +75,17 @@
                     <!-- Messages go here -->
                 </div>
 
-                <div class="chat-input-area" style="flex-direction: column; align-items: stretch; padding: 10px 20px;">
-                    <div id="unicastControls" class="d-none" style="display: flex; gap: 10px; margin-bottom: 10px;">
-                        <select id="messageModeSelect" class="form-control" style="margin: 0; padding: 8px; width: auto;">
+                <div class="chat-input-area">
+                    <div id="unicastControls" class="unicast-controls d-none">
+                        <select id="messageModeSelect" class="form-control message-mode-select">
                             <option value="broadcast">Broadcast (All)</option>
                             <option value="unicast">Unicast (Private)</option>
                         </select>
-                        <select id="unicastUserSelect" class="form-control d-none" style="margin: 0; padding: 8px; flex: 1;">
+                        <select id="unicastUserSelect" class="form-control unicast-user-select d-none">
                             <option value="">Select user...</option>
                         </select>
                     </div>
-                    <div style="display: flex; gap: 15px; align-items: center; width: 100%;">
+                    <div class="input-wrapper">
                         <button class="icon-btn"><i class="far fa-smile"></i></button>
                         <button class="icon-btn"><i class="fas fa-paperclip"></i></button>
                         <input type="text" id="messageInput" placeholder="Type a message...">
