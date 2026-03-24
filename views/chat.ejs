@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatify</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="chat-body">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile">
+                    <div class="avatar"><%= user.username.charAt(0).toUpperCase() %></div>
+                    <div class="user-info">
+                        <h3><%= user.username %></h3>
+                        <span class="status-indicator online"></span> Online
+                    </div>
+                </div>
+                <div class="actions">
+                    <button id="createGroupBtn" class="icon-btn" title="Create Group"><i class="fas fa-users-cog"></i></button>
+                    <button id="logoutBtn" class="icon-btn" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+            
+            <div class="sidebar-search">
+                <input type="text" id="searchInput" placeholder="Search users...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="sidebar-lists">
+                <div class="list-section">
+                    <h4>Direct Messages</h4>
+                    <ul id="usersList" class="contact-list">
+                        <!-- Populated dynamic -->
+                    </ul>
+                </div>
+                <div class="list-section">
+                    <h4>Groups</h4>
+                    <ul id="groupsList" class="contact-list">
+                        <!-- Populated dynamic -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area" id="chatArea">
+            <div class="chat-placeholder" id="chatPlaceholder">
+                <div class="icon-wrapper"><i class="far fa-comments"></i></div>
+                <h2>Chatify for Web</h2>
+                <p>Select a conversation or start a new one.</p>
+            </div>
+
+            <div class="chat-container d-none" id="chatContainer">
+                <div class="chat-header">
+                    <div class="active-contact-info">
+                        <div class="avatar" id="activeAvatar">U</div>
+                        <div class="details">
+                            <h3 id="activeName">User Name</h3>
+                            <span id="activeStatus" class="status-text">Online</span>
+                        </div>
+                    </div>
+                    <div class="chat-actions d-none" id="groupActions">
+                        <button class="btn-primary" id="manageGroupBtn" style="padding: 5px 10px; font-size: 12px; margin-right: 5px;">Manage Group</button>
+                        <button class="btn-danger" id="deleteGroupBtn" style="padding: 5px 10px; font-size: 12px; background: var(--danger); color: white; border: none; border-radius: 4px;">Delete Group</button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages go here -->
+                </div>
+
+                <div class="chat-input-area" style="flex-direction: column; align-items: stretch; padding: 10px 20px;">
+                    <div id="unicastControls" class="d-none" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <select id="messageModeSelect" class="form-control" style="margin: 0; padding: 8px; width: auto;">
+                            <option value="broadcast">Broadcast (All)</option>
+                            <option value="unicast">Unicast (Private)</option>
+                        </select>
+                        <select id="unicastUserSelect" class="form-control d-none" style="margin: 0; padding: 8px; flex: 1;">
+                            <option value="">Select user...</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 15px; align-items: center; width: 100%;">
+                        <button class="icon-btn"><i class="far fa-smile"></i></button>
+                        <button class="icon-btn"><i class="fas fa-paperclip"></i></button>
+                        <input type="text" id="messageInput" placeholder="Type a message...">
+                        <button id="sendBtn" class="send-btn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Group Manage Modal -->
+    <div class="modal d-none" id="manageGroupModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeManageModal">&times;</span>
+            <h2>Manage Group</h2>
+            
+            <h4 class="mt-2">Add Members:</h4>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <select id="addMemberSelect" class="form-control" style="flex:1; margin:0;">
+                    <option value="">Select a user...</option>
+                </select>
+                <button id="addMemberBtn" class="btn-primary" style="width: auto; padding: 0 15px;">Add</button>
+            </div>
+
+            <h4>Current Members:</h4>
+            <div id="currentMembersList" class="selectable-list"></div>
+        </div>
+    </div>
+
+    <!-- Group Modal -->
+    <div class="modal d-none" id="groupModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Create New Group</h2>
+            <input type="text" id="groupName" placeholder="Group Name" class="form-control">
+            <h4>Select Members:</h4>
+            <div id="groupMembersList" class="selectable-list"></div>
+            <button id="confirmCreateGroup" class="btn-primary mt-2">Create Group</button>
+        </div>
+    </div>
+
+    <!-- Pass user info to client JS safely -->
+    <script>
+        window.CURRENT_USER = {
+            id: "<%= user._id %>",
+            username: "<%= user.username %>"
+        };
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
