@@ -17,6 +17,9 @@ const activeName = document.getElementById('activeName');
 const activeAvatar = document.getElementById('activeAvatar');
 const activeStatus = document.getElementById('activeStatus');
 const logoutBtn = document.getElementById('logoutBtn');
+const backBtn = document.getElementById('backBtn');
+const sidebar = document.querySelector('.sidebar');
+
 
 const groupModal = document.getElementById('groupModal');
 const createGroupBtn = document.getElementById('createGroupBtn');
@@ -113,6 +116,12 @@ async function openChat(type, id, name, status) {
     // UI Update
     chatPlaceholder.classList.add('d-none');
     chatContainer.classList.remove('d-none');
+    
+    // Mobile: Hide sidebar when opening chat
+    if (window.innerWidth <= 768) {
+        sidebar.classList.add('hide-sidebar');
+    }
+
     activeName.innerText = name;
     activeAvatar.innerText = name.charAt(0).toUpperCase();
     activeStatus.innerText = status;
@@ -563,5 +572,13 @@ searchInput.addEventListener('input', (e) => {
     }, 300);
 });
 
+// Back button for mobile
+if (backBtn) {
+    backBtn.addEventListener('click', () => {
+        sidebar.classList.remove('hide-sidebar');
+    });
+}
+
 // Start
 fetchContacts();
+

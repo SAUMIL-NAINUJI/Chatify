@@ -412,3 +412,72 @@ body {
 
 .selectable-item input { margin-right: 10px; }
 .mt-2 { margin-top: 15px; }
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    .app-container {
+        position: relative;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 10;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.hide-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .chat-area {
+        width: 100%;
+        height: 100%;
+    }
+
+    .chat-container {
+        height: 100%;
+    }
+
+    .msg {
+        max-width: 85%;
+    }
+
+    /* Show back button only on mobile */
+    .back-btn {
+        display: block !important;
+        margin-right: 10px;
+        font-size: 20px;
+        color: var(--text-muted);
+        cursor: pointer;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .chat-header {
+        padding: 10px 15px;
+    }
+
+    .chat-input-area {
+        padding: 10px 15px;
+    }
+}
+
+@media (min-width: 769px) {
+    .back-btn {
+        display: none !important;
+    }
+}
+
+/* Glassmorphism for Auth Cards */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
